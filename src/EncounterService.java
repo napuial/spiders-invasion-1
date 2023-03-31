@@ -29,4 +29,41 @@ public class EncounterService {
             System.out.println();
         }
     }
+
+    void fillBoardWithSpiders() {
+        for(SpidersCatalog spider : SpidersCatalog.values()) {
+            putSpidersPopulation(spider);
+        }
+    }
+
+    void putSpidersPopulation(SpidersCatalog spider) {
+        int population = spider.getPOPULATION();
+        while(population > 0) {
+            putOneSpider(spider);
+            population--;
+        }
+    }
+
+    void putOneSpider(SpidersCatalog spider) {
+        int randomRow = RandomizationUtility.randomRow(ENCOUNTER.getBOARD_HEIGHT());
+        if(checkIfLineIsEmpty(randomRow)) {
+            int randomIndex = RandomizationUtility.randomIndex(spider, ENCOUNTER.getBOARD_WIDTH());
+            int skinIndex = 0;
+            for(int j = randomIndex; j < randomIndex + spider.getSKIN_PATTERN().length(); j++) {
+                ENCOUNTER.getHIDDEN_BOARD()[randomRow][j] = spider.getSKIN_PATTERN().charAt(skinIndex);
+                skinIndex++;
+            }
+        } else {
+            putOneSpider(spider);
+        }
+    }
+
+    boolean checkIfLineIsEmpty(Integer rowNumber) {
+        for(int j = 0; j < ENCOUNTER.getBOARD_WIDTH(); j++) {
+            if(ENCOUNTER.getHIDDEN_BOARD()[rowNumber][j] != '~') {
+                return false;
+            }
+        }
+        return true;
+    }
 }

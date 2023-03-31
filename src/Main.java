@@ -4,9 +4,7 @@ public class Main {
         Encounter encounter = new Encounter(5, 20);
         EncounterService encounterService = new EncounterService(encounter);
         encounterService.prepareBoards();
-        System.out.println("\nHIDDEN BOARD:");
+        encounterService.fillBoardWithSpiders();
         encounterService.showBoard(encounter.getHIDDEN_BOARD());
-        System.out.println("\nVISIBLE BOARD:");
-        encounterService.showBoard(encounter.getVISIBLE_BOARD());
     }
 }
