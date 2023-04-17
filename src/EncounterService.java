@@ -66,4 +66,16 @@ public class EncounterService {
         }
         return true;
     }
+
+    String takeCoordinatesFromUser() {
+        UserInput userInput;
+        UserInputValidation userInputValidation;
+        boolean validationStatus;
+        do {
+            userInput = new UserInput(ENCOUNTER);
+            userInputValidation = new UserInputValidation(userInput);
+            validationStatus = userInputValidation.validate();
+        } while(validationStatus != true);
+        return userInput.getArrangementCords();
+    }
 }
