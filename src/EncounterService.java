@@ -2,6 +2,8 @@ public class EncounterService {
 
     final private Encounter ENCOUNTER;
 
+    private UserInput userInput;
+
     public EncounterService(Encounter encounter) {
         ENCOUNTER = encounter;
     }
@@ -53,6 +55,7 @@ public class EncounterService {
                 ENCOUNTER.getHIDDEN_BOARD()[randomRow][j] = spider.getSKIN_PATTERN().charAt(skinIndex);
                 skinIndex++;
             }
+            ENCOUNTER.getSpidersInGame().add(new Spider(randomRow, spider));
         } else {
             putOneSpider(spider);
         }
@@ -67,8 +70,7 @@ public class EncounterService {
         return true;
     }
 
-    String takeCoordinatesFromUser() {
-        UserInput userInput;
+    void takeCoordinates() {
         UserInputValidation userInputValidation;
         boolean validationStatus;
         do {
@@ -76,6 +78,31 @@ public class EncounterService {
             userInputValidation = new UserInputValidation(userInput);
             validationStatus = userInputValidation.validate();
         } while(validationStatus != true);
-        return userInput.getArrangementCords();
+        userInput.setCords(userInput.arrangementCords());
+    }
+
+    void actionOnCell() {
+       switch(ENCOUNTER.getHIDDEN_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()]) {
+           case '~':
+               System.out.println("empty");
+               ENCOUNTER.getHIDDEN_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()] = 'X';
+               break;
+           case 'X':
+               System.out.println("repeat");
+               break;
+           default:
+               ENCOUNTER.getHIDDEN_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()] = 'X';
+               for(Spider spider : ENCOUNTER.getSpidersInGame()) {
+                   if (spider.getID() == userInput.getIndexRow()) {
+                       spider.setHEALTH(spider.getHEALTH() - 1);
+                       if (spider.getHEALTH() == 0) {
+                           ENCOUNTER.getSpidersInGame().remove(spider);
+                           System.out.println("the spider has been eliminated");
+                           return;
+                       }
+                   }
+               }
+               System.out.println("hit");
+       }
     }
 }

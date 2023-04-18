@@ -1,18 +1,22 @@
 public class Spider {
 
-    final private String SKIN;
-    final private Integer SKIN_LENGTH;
+    final private  Integer ID;
+    private Integer HEALTH;
 
-    public Spider(SpidersCatalog chosenSpider) {
-        SKIN = chosenSpider.getSKIN_PATTERN();
-        SKIN_LENGTH = SKIN.length();
+    public Spider(Integer id, SpidersCatalog spider) {
+        ID = id;
+        HEALTH = spider.getHEALTH();
     }
 
-    public String getSKIN() {
-        return SKIN;
+    public Integer getHEALTH() {
+        return HEALTH;
     }
 
-    public Integer getSKIN_LENGTH() {
-        return SKIN_LENGTH;
+    public void setHEALTH(Integer health) {
+        HEALTH = health;
+    }
+
+    public Integer getID() {
+        return ID;
     }
 }

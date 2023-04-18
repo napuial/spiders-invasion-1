@@ -1,9 +1,13 @@
+import java.util.LinkedList;
+
 public class Encounter {
 
     final private Integer BOARD_HEIGHT;
     final private Integer BOARD_WIDTH;
     final private Character[][] HIDDEN_BOARD;
     final private Character[][] VISIBLE_BOARD;
+
+    private LinkedList<Spider> spidersInGame = new LinkedList<>();
 
     public Encounter(Integer boardHeight, Integer boardWidth) {
         BOARD_HEIGHT = boardHeight;
@@ -26,5 +30,9 @@ public class Encounter {
 
     public Character[][] getVISIBLE_BOARD() {
         return VISIBLE_BOARD;
+    }
+
+    public LinkedList<Spider> getSpidersInGame() {
+        return spidersInGame;
     }
 }

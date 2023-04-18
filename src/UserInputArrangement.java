@@ -3,7 +3,7 @@ public class UserInputArrangement {
     private String coordinates;
 
     public UserInputArrangement(String cords) {
-        coordinates = cords;
+        coordinates = cords.toUpperCase();
     }
 
     String arrangementCoordinates() {

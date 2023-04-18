@@ -19,12 +19,31 @@ public class UserInput {
         return scanner.nextLine();
     }
 
+    public String arrangementCords() {
+        return userInputArrangement.arrangementCoordinates();
+    }
+
     public String getCords() {
         return cords;
     }
 
-    public String getArrangementCords() {
-        return userInputArrangement.arrangementCoordinates().toUpperCase();
+    public void setCords(String cords) {
+        this.cords = cords;
+    }
+
+    public Integer getIndexRow() {
+        return Integer.parseInt("" + cords.charAt(0)) - 1;
+    }
+
+    public Integer getIndexColumn() {
+        int intLetter = 65;
+        for(int i = 0; i < ENCOUNTER.getBOARD_WIDTH(); i++) {
+            if(intLetter == (int) cords.charAt(1)) {
+                return i;
+            }
+            intLetter++;
+        }
+        return null;
     }
 
     public Encounter getENCOUNTER() {
