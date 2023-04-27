@@ -6,9 +6,12 @@ public class Main {
         encounterService.prepareBoards();
         encounterService.fillBoardWithSpiders();
         while(encounter.getSpidersInGame().size() > 0) {
-            encounterService.showBoard(encounter.getHIDDEN_BOARD());
+            encounterService.showBoard(encounter.getVISIBLE_BOARD());
             encounterService.takeCoordinates();
             encounterService.actionOnCell();
+            System.out.println();
         }
+        encounterService.showBoard(encounter.getVISIBLE_BOARD());
+        System.out.println("ALL SPIDERS HAVE BEEN ELIMINATED");
     }
 }

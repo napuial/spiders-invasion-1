@@ -1,7 +1,6 @@
 public class EncounterService {
 
     final private Encounter ENCOUNTER;
-
     private UserInput userInput;
 
     public EncounterService(Encounter encounter) {
@@ -50,12 +49,8 @@ public class EncounterService {
         int randomRow = RandomizationUtility.randomRow(ENCOUNTER.getBOARD_HEIGHT());
         if(checkIfLineIsEmpty(randomRow)) {
             int randomIndex = RandomizationUtility.randomIndex(spider, ENCOUNTER.getBOARD_WIDTH());
-            int skinIndex = 0;
-            for(int j = randomIndex; j < randomIndex + spider.getSKIN_PATTERN().length(); j++) {
-                ENCOUNTER.getHIDDEN_BOARD()[randomRow][j] = spider.getSKIN_PATTERN().charAt(skinIndex);
-                skinIndex++;
-            }
-            ENCOUNTER.getSpidersInGame().add(new Spider(randomRow, spider));
+            ENCOUNTER.getSpidersInGame().add(new Spider(randomRow, randomIndex, spider));
+            showSpiderSkin(ENCOUNTER.getHIDDEN_BOARD(), ENCOUNTER.getSpidersInGame().getLast());
         } else {
             putOneSpider(spider);
         }
@@ -85,6 +80,7 @@ public class EncounterService {
        switch(ENCOUNTER.getHIDDEN_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()]) {
            case '~':
                System.out.println("empty");
+               ENCOUNTER.getVISIBLE_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()] = ' ';
                ENCOUNTER.getHIDDEN_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()] = 'X';
                break;
            case 'X':
@@ -92,10 +88,13 @@ public class EncounterService {
                break;
            default:
                ENCOUNTER.getHIDDEN_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()] = 'X';
+               ENCOUNTER.getVISIBLE_BOARD()[userInput.getIndexRow()][userInput.getIndexColumn()] = 'X';
                for(Spider spider : ENCOUNTER.getSpidersInGame()) {
                    if (spider.getID() == userInput.getIndexRow()) {
-                       spider.setHEALTH(spider.getHEALTH() - 1);
-                       if (spider.getHEALTH() == 0) {
+                       spider.setHealth(spider.getHealth() - 1);
+                       if (spider.getHealth() == 0) {
+                           cleanUpSpiderRemnants(spider);
+                           showSpiderSkin(ENCOUNTER.getVISIBLE_BOARD(), spider);
                            ENCOUNTER.getSpidersInGame().remove(spider);
                            System.out.println("the spider has been eliminated");
                            return;
@@ -104,5 +103,19 @@ public class EncounterService {
                }
                System.out.println("hit");
        }
+    }
+
+    void cleanUpSpiderRemnants(Spider spider) {
+        for(int i = spider.getFIRST_LEG_INDEX(); i < spider.getFIRST_LEG_INDEX() + spider.getSKIN().length(); i++) {
+            ENCOUNTER.getHIDDEN_BOARD()[spider.getID()][i] = 'X';
+        }
+    }
+
+    void showSpiderSkin(Character[][] board, Spider spider) {
+        int skinIndex = 0;
+        for(int i = spider.getFIRST_LEG_INDEX(); i < spider.getFIRST_LEG_INDEX() + spider.getSKIN().length(); i++) {
+            board[spider.getID()][i] = spider.getSKIN().charAt(skinIndex);
+            skinIndex++;
+        }
     }
 }

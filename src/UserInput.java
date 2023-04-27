@@ -4,12 +4,11 @@ public class UserInput {
 
     final private Encounter ENCOUNTER;
     private String cords;
-
     private UserInputArrangement userInputArrangement;
 
     public UserInput(Encounter encounter) {
         ENCOUNTER = encounter;
-        cords = takeInput();
+        cords = takeInput().toUpperCase();
         userInputArrangement = new UserInputArrangement(cords);
     }
 
