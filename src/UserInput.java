@@ -14,7 +14,7 @@ public class UserInput {
 
     private String takeInput() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Coordinates: ");
+        System.out.print(TextsStorage.AWAITING_COORDINATES);
         return scanner.nextLine();
     }
 

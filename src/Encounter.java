@@ -6,7 +6,6 @@ public class Encounter {
     final private Integer BOARD_WIDTH;
     final private Character[][] HIDDEN_BOARD;
     final private Character[][] VISIBLE_BOARD;
-
     private LinkedList<Spider> spidersInGame = new LinkedList<>();
 
     public Encounter(Integer boardHeight, Integer boardWidth) {

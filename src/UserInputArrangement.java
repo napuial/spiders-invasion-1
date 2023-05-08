@@ -1,12 +1,12 @@
 public class UserInputArrangement {
 
-    private String coordinates;
+    final private String coordinates;
 
     public UserInputArrangement(String cords) {
         coordinates = cords;
     }
 
-    String arrangementCoordinates() {
+    public String arrangementCoordinates() {
         try {
             Integer.parseInt("" + coordinates.charAt(0));
             return coordinates;

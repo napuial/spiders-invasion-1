@@ -1,7 +1,6 @@
 public class UserInputValidation {
 
     final private UserInput USER_INPUT;
-
     final private Integer EXPECTED_CORDS_LENGTH = 2;
 
     public UserInputValidation(UserInput userInput) {
@@ -9,16 +8,19 @@ public class UserInputValidation {
     }
 
     public boolean validate() {
-        if (!checkCordsLength()) {
+        if(!checkCordsLength()) {
+            if(USER_INPUT.getCords().equals(TextsStorage.BREAKING_GAME)) {
+                return true;
+            }
             return false;
         }
         int numberIndex = giveIndexContainsNumber();
-        if (numberIndex == 2) return false;
+        if(numberIndex == 2) return false;
         int letterIndex = numberIndex == 0 ? 1 : 0;
-        if (!checkIfNumberIsInScope(numberIndex, USER_INPUT.getENCOUNTER().getBOARD_HEIGHT())) {
+        if(!checkIfNumberIsInScope(numberIndex, USER_INPUT.getENCOUNTER().getBOARD_HEIGHT())) {
             return false;
         }
-        if (!checkIfLetterIsInScope(letterIndex, USER_INPUT.getENCOUNTER().getBOARD_WIDTH())) {
+        if(!checkIfLetterIsInScope(letterIndex, USER_INPUT.getENCOUNTER().getBOARD_WIDTH())) {
             return false;
         }
         return true;
@@ -44,7 +46,7 @@ public class UserInputValidation {
 
     private boolean checkIfNumberIsInScope(Integer numberIndex, Integer boardHeight) {
         for(int i = 1; i <= boardHeight; i++) {
-            if (Integer.parseInt("" + USER_INPUT.getCords().charAt(numberIndex)) == i) {
+            if(Integer.parseInt("" + USER_INPUT.getCords().charAt(numberIndex)) == i) {
                 return true;
             }
         }
@@ -53,7 +55,7 @@ public class UserInputValidation {
 
    private boolean checkIfLetterIsInScope(Integer letterIndex, Integer boardWidth) {
         for(int i = 65; i <= 65 + boardWidth; i++) {
-            if (USER_INPUT.getCords().toUpperCase().charAt(letterIndex) == (char) i) {
+            if(USER_INPUT.getCords().toUpperCase().charAt(letterIndex) == (char) i) {
                 return true;
             }
         }
